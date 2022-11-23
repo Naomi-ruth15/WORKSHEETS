@@ -1,0 +1,47 @@
+---
+title: "Worksheet 3b"
+author: "Naomi Ruth Salaber"
+date: "2022-11-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r r_data <- data.frame(respondents, sex, fathers_occupation,persons_at_home, siblings_at_school,types_of_houses)}
+r_data
+```
+```{r siblings_at_school <- c(6, 4, 4, 1, 2, 1, 5, 3, 1, 2, 3, 2, 5, 5, 2, 1, 2, 5, 3, 2)}
+mean(siblings_at_school)
+```
+
+
+```{r new_data <- r_data(c(3,5),c(2,4))}
+new_data
+```
+```{r types_houses <- types_of_houses}
+types_houses
+```
+```{r male_data <- data.frame(sex, fathers_occupation)subset(male_data, sex == 1 & fathers_occupation == 1)}
+print(male_data)
+```
+```{r girl_data <- data.frame(sex, siblings_at_school) subset(girl_data, sex == 2 & siblings_at_school >= 5)}
+print(girl_data)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

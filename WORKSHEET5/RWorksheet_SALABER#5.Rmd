@@ -1,0 +1,119 @@
+---
+title: "Worksheet5"
+author: "Naomi Ruth Salaber"
+date: "2022-11-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r 1A}
+
+library(ggplot2)
+df <- data.frame("course"=c("1st", "2nd", "3rd", "4th"), "sy"= c(80, 75, 70, 60))
+ggplot(df) + geom_col(aes(course, sy))
+
+sy <- c(80, 75, 70, 60)
+course <- c("1st", "2nd", "3rd", "4th")
+```
+```{r 1B}
+br <- barplot(sy, main= "Enrollment of BS Computer Science",
+              xlab = "Curriculum Year", ylab = "number of
+              students")
+```
+```{r 2A}
+food <- 60
+electricity <- 10
+savings <- 5
+misc <- 25
+
+expenses <- data.frame(food, electricity, savings,misc)
+expenses
+```
+```{r 2B}
+expense <- c(60, 10, 5, 25)
+pie(expense, main = "Expenses", col = rainbow(length(expense)),
+    labels = c("food", "electricity", "savings", "misc"))
+
+expense_label <- round(expense/sum(expense) * 100, 1)
+expense_label <- paste(expense_label, "%", sep = "")
+
+pie(expense, main = "Expenses", col = rainbow(length(expense)),
+    labels = expense_label, cex=0.8)
+legend(1, c("food", "electricity", "savings", "misc"),
+       cex = 0.8, fill = rainbow(length(expense)))
+```
+```{r num3}
+data("mtcars")
+
+mt  <- mtcars$mpg
+
+hist(mt, main = "Histogram for mpg")
+```
+```{r 3B}
+hist(mt, breaks=12, col="red")
+```
+```{r 3C}
+h<-hist(mt, breaks=10, col="red", xlab="Miles Per Gallon",
+        main="Histogram with Normal Curve")
+xfit<-seq(min(mt),max(mt),length=40)
+yfit<-dnorm(xfit,mean=mean(mt),sd=sd(mt))
+yfit <- yfit*diff(h$mids[1:2])*length(mt)
+lines(xfit, yfit, col="blue", lwd=2)
+```
+```{r 3D}
+data("iris")
+
+data_a <- data.frame(iris)
+data_a
+
+a_data <- subset(data_a, Species == 'setosa')
+a_data
+
+data_b <- data.frame(iris)
+data_b
+b_data <- subset(data_b, Species == 'versicolor')
+b_data
+
+data_c <- data.frame(iris)
+data_c
+c_data <-subset(data_c, Species == 'virginica')
+c_data
+```
+```{r 4B}
+setosa <- colMeans(a_data[sapply(a_data,is.numeric)])
+setosa
+
+versicolor <- colMeans(b_data[sapply(b_data,is.numeric)])
+versicolor
+
+virginica <- colMeans(c_data[sapply(c_data,is.numeric)])
+virginica
+```
+```{r 4C}
+sec <- rbind(setosa, versicolor, virginica)
+sec
+```
+```{r 4D}
+barplot(sec, beside =TRUE, main = "Iris Mean",
+        xlab = "Characterisics", ylab = "Mean Scores",
+        col = c("red", "green", "blue"))
+
+```
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
