@@ -1,0 +1,141 @@
+---
+title: "WORKSHEET6"
+author: "Naomi Ruth Salaber"
+date: "2022-12-04"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r m}
+library(dplyr)
+library(tinytex)
+library(ggplot2)
+data(mpg)
+nrow(mpg)
+ncol(mpg)
+
+```
+```{r w2}
+manufacturer <- mpg %>% group_by (manufacturer) %>% count()
+manufacturer
+model <- mpg %>% group_by (model) %>% count()
+model
+```
+```{r w2b}
+d <- mpg %>% group_by (manufacturer, model) %>% count()
+plot(d)
+ggplot(d, aes(x = manufacturer, y = model)) + geom_point(color = 'purple')
+
+```
+```{r w3}
+ggplot(d, aes(x = manufacturer, y = model)) + geom_point(color = 'purple')
+```
+```{r w3a}
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+```
+```{r w4}
+grouped_model <- mpg %>% group_by (model) %>% count()
+grouped_model
+```
+```{r w4A}
+qplot(model, data = mpg,main = "Number of Cars per Model", xlab = "Model",
+      ylab = "Number of Cars", geom = "bar", fill = manufacturer) +
+  coord_flip()
+```
+```{r w4B}
+top <- model[1:20,] %>% top_n(2)
+top
+```
+```{r w5}
+ggplot(data = mpg, mapping = aes(x = displ, y = cyl)) +
+  geom_point(mapping=aes(color=displ))
+```
+```{r w6}
+front_wheel <- subset(mpg, drv == 'f')
+nrow(front_wheel)
+front_wheel
+
+rear_wheel <- subset(mpg, drv == 'r')
+nrow(rear_wheel)
+rear_wheel
+
+n4 <- subset(mpg, drv == '4')
+nrow(n4)
+n4
+
+suv <- subset(mpg, class == 'suv')
+nrow(suv)
+suv
+
+com <- subset(mpg, class == 'compact')
+nrow(com)
+com
+
+m_size <- subset(mpg, class == 'midsize')
+nrow(m_size)
+m_size
+
+two_seater <- subset(mpg, class == '2seater')
+nrow(two_seater)
+two_seater
+
+mini_van <- subset(mpg, class == 'minivan')
+nrow(mini_van)
+mini_van
+
+p_up <- subset(mpg, class == 'pickup')
+nrow(p_up)
+p_up
+
+sub_com <- subset(mpg, class == 'subcompact')
+nrow(sub_com)
+sub_com
+```
+```{r w6A}
+ggplot(mpg, aes(drv, class)) +
+  geom_tile (aes(fill = class))
+```
+```{r w71}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = "blue"))
+```
+```{r w72}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), colour = "blue")
+```
+```{r w8}
+mpg
+```
+```{r w8c}
+ggplot( data = mpg) +
+  geom_point(mapping = aes(x = displ , y = hwy, col = displ)) 
+```
+```{r w9}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping=aes(color=displ)) +
+  geom_smooth(se =FALSE)
+```
+```{r w10}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping=aes(color=displ)) +
+  geom_smooth(se =FALSE,method = lm)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
