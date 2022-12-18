@@ -1,0 +1,82 @@
+---
+title: "Individual Project 1"
+author: "Naomi Ruth Salaber"
+date: "2022-12-11"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r extensions}
+library(twitteR)
+library(rtweet)
+library(tm)
+library(dplyr)
+library(plotly)
+library(RColorBrewer)
+library(tidytext)
+library(stringr)
+library(tidyr)
+library(magrittr)
+library(wordcloud)
+library(wordcloud2)
+
+```
+```{r keys}
+CONSUMER_SECRET <- "soZICRcHCy4g1Or6acENFVTr7COIQs4VrOVuij8rdDtvwkOIAI"
+CONSUMER_KEY <- "6aL3C3koSjfqm7KDuExSY5yFP"
+ACCESS_SECRET <- "aPsD27SVw1MCAm4XRbTsaqQxpRJWVgxe23XoEIZ91qw6D"
+ACCESS_TOKEN <- "1595613946668810241-HgPdtEF4ArKpQTNzNJwiBrWwcWpMdt"
+```
+```{r set}
+setup_twitter_oauth(consumer_key = CONSUMER_KEY,
+                    consumer_secret = CONSUMER_SECRET,
+                    access_token = ACCESS_TOKEN,
+                    access_secret = ACCESS_SECRET)
+```
+```{r trend}
+ Enhypen_trend = searchTwitter("ENHYPEN -filter:retweets", n = 10000, since = "2022-12-2", until = "2022-12-5",
+                                lang = "en", retryOnRateLimit = 120)
+```
+```{r tweetsDF}
+ tweetsDF <- twListToDF(Enhypen_trend)
+  tweetsDF
+```
+```{r class}
+class(tweetsDF)
+```
+```{r name}
+names(tweetsDF)
+```
+```{r view}
+  View(tweetsDF)
+```
+```{r head1}
+  head(tweetsDF)[1:5]
+```
+```{r head2}
+head(tweetsDF$text)[1:5]
+```
+```{r data_checking}
+ data_checking <- sapply(Enhypen_trend, function(x) sum(is.na(x)))  
+data_checking  
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
