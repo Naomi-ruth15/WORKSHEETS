@@ -1,0 +1,281 @@
+---
+title: "WORKSHEET_7"
+author: "NAOMI RUTH SALABER"
+date: "2022-12-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data}
+Student <- seq(1:10)
+PreTest <- c(55,54,47,57,51,61,57,54,63,58)
+PostTest <- c(61,60,56,63,56,63,59,56,62,61)
+
+datastudents <- data.frame(Student,PreTest,PostTest)
+datastudents
+```
+
+```{r lib}
+#a. Compute the descriptive statistics using different packages (Hmisc and pastecs).
+#Write the codes and its result.
+
+library(Hmisc)
+library(pastecs)
+```
+
+```{r 1hmisc}
+l <- describe(datastudents)
+l
+```
+
+```{r 1pastecs}
+m <- stat.desc(datastudents)
+m
+```
+
+```{r 2}
+#2. The Department of Agriculture was studying the effects of several levels of a
+#fertilizer on the growth of a plant. For some analyses, it might be useful to convert
+#the fertilizer levels to an ordered factor.
+
+# The data were 10,10,10, 20,20,50,10,20,10,50,20,50,20,10.
+d1 <- c(10,10,10,20,20,50,10,
+           20,10,50,20,50,20,10)
+d1
+```
+
+```{r 2a}
+#a. Write the codes and describe the result.
+#ans- its levels differ from 10 to 20 to 50
+factord1 <- factor(d1, ordered = TRUE)
+factord1
+```
+
+```{r 3}
+#3. Abdul Hassan, president of Floor Coverings Unlimited, has asked you to study
+#the exercise levels undertaken by 10 num3 were “l”, “n”, “n”, “i”, “l” ,
+#“l”, “n”, “n”, “i”, “l” ; n=none, l=light, i=intense
+d2 <- c("l","n","n","i","l","l","n","n","i","l")
+d2
+```
+
+```{r 3a}
+#a. What is the best way to represent this in R?
+#ans - presenting the data in Data frame
+d2DF <- data.frame(d2)
+d2DF
+```
+
+```{r 4}
+#4.Sample of 30 tax accountants from all the states and territories of Australia and
+#their individual state of origin is specified by a character vector of state mnemonics
+#as:
+state_d <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa", "qld",
+                "vic", "nsw", "vic", "qld", "qld", "sa", "tas", "sa", "nt",
+                "wa", "vic", "qld", "nsw", "nsw", "wa", "sa", "act", "nsw",
+                "vic", "vic", "act")
+state_d 
+```
+
+```{r 4a}
+#a. Apply the factor function and factor level. Describe the results.
+
+#factor function and factor level
+fstate_d <- factor(state_d)
+fstate_d
+```
+
+```{r 4aa}
+#Getting factor level of states
+l_state <- levels(fstate_d)
+l_state
+```
+
+```{r 5}
+#5. From #4 - continuation:
+
+#• Suppose we have the incomes of the same tax accountants in another vector (insuitably large units of money)
+
+income <- c(60, 49, 40, 61, 64, 60, 59, 54,
+            62, 69, 70, 42, 56, 61, 61, 61, 58, 51, 48,
+            65, 49, 49, 41, 48, 52, 46, 59, 46, 58, 43)
+income
+```
+
+```{r 5a}
+#a. Calculate the sample mean income for each state we can now use the special
+#function tapply():
+total_i <- tapply(income, state_d, mean)
+total_i
+```
+
+```{r 5b}
+#b. Copy the results and interpret.
+total_i
+#ans- the state was factor out and was applied for the tapply function in order for the income 
+#to be arranged corresponding in each state.
+```
+
+```{r 6a}
+#6.Calculate the standard errors of the state income means (refer again to number 3)
+
+#a. What is the standard error? Write the codes.
+lenght_d <- length(total_i)
+lenght_d
+
+sd_d <- sd(total_i)
+sd_d
+
+d3 <- sd_d/sqrt(lenght_d)
+d3
+#b. Interpret the result.
+#the data was summarize in length as it shows it has a 8 observation and was also summarize by getting its standard deviation along with its standard of errors.
+```
+
+```{r 7}
+#7. Use the titanic dataset.
+data(Titanic)
+titanic <- data.frame(Titanic)
+titanic
+```
+
+```{r 7a}
+#a. subset the titatic dataset of those who survived and not survived. Show the
+#codes and its result.
+
+survive_d <- subset(titanic, Survived == "Yes")
+survive_d
+
+died_d <- subset(titanic, Survived == "No")
+died_d
+```
+
+```{r 8b}
+#8. The data sets are about the breast cancer Wisconsin. The samples arrive periodically as Dr. Wolberg reports his clinical cases. The database therefore reflects this
+#chronological grouping of the data. You can create this dataset in Microsoft Excel.
+
+#a. describe what is the dataset all about.
+# The data is for breast cancer patients, it was categorized in different types of breasts cancer and how serious it's state, the number of patients was also organized under the different category of breast cancer
+
+#b. Import the data from MS Excel. Copy the codes.
+library("readxl")
+
+d4 <- read_excel("C:/Users/Naomi/Desktop/Breast_Cancer.xlsx") 
+
+d4
+```
+
+```{r 8c}
+#c. Compute the descriptive statistics using different packages. Find the values of:
+#c.1 Standard error of the mean for clump thickness.
+clump_l <- length(d4$`CL. thickness`)
+clump_l
+
+clump_sd <- sd(d4$`CL. thickness`)
+clump_sd
+
+clump_se <- clump_sd/sqrt(d4$`CL. thickness`)
+clump_se
+```
+
+```{r 8cc}
+#c.2 Coefficient of variability for Marginal Adhesion.
+d5 <- sd(d4$`Marg. Adhesion`) / mean(d4$`Marg. Adhesion`) * 100
+d5
+```
+
+```{r 8ccc}
+#c.3 Number of null values of Bare Nuclei.
+nuclei <- subset(d4,`Bare. Nuclei` == "NA")
+nuclei
+```
+
+```{8 cccc}
+#c.4 Mean and standard deviation for Bland Chromatin
+bc <- mean(d4$`Bl. Chromatin`)
+bc
+
+sdBC <- sd(d4$`Bl. Chromatin`)
+sdBC
+```
+
+```{8 ccccc}
+#c.5 Confidence interval of the mean for Uniformity of Cell Shape
+
+#Calculate the mean
+cs <- mean(d4$`Cell Shape`)
+cs
+
+#Calculate the standard error of the mean
+lenght_se <- length(d4$`Cell Shape`)
+lenght_se
+
+sd_se <- sd(d4$`Cell Shape`)
+sd_se
+
+Cellshape <- sd_se/sqrt(lenght_se)
+Cellshape
+
+#Find the t-score that corresponds to the confidence level
+t_score = 0.05
+t_score
+
+t_scores = lenght_se - 1
+t_scores
+
+ts = qt(p=t_score/2, df=t_scores,lower.tail=F)
+ts
+
+#Constructing the confidence interval
+c <- ts * Cellshape
+c
+
+#Lower
+c_diff <- cs - c
+c_diff
+
+#Upper
+sumCI <- cs + c
+sumCI
+
+d6 <- c(c_diff, sumCI)
+d6
+```
+
+```{r 8d}
+#d. How many attributes?
+attributess <- attributes(d4)
+attributess
+```
+
+```{r 8e}
+#e. Find the percentage of respondents who are malignant. Interpret the results.
+res_percentage <- subset(d4, Class == "malignant")
+res_percentage
+#18 respondents are malignant in total of 49 respondents. Getting the percentage 18 / 49 * 100 / 49 * 100
+
+#There 36% of respondents who are malignant.
+```
+
+```{r 9}
+#9. Export the data abalone to the Microsoft excel file. Copy the codes.
+library("AppliedPredictiveModeling")
+
+data(abalone)
+View(abalone)
+head(abalone)
+summary(abalone)
+```
+
+```{r export}
+#Exporting the data abalone to the Microsoft excel file
+library(xlsx)
+
+d8 <- write.xlsx("abalone","C:/Users/Naomi/Desktop/abalone.xlsx") 
+d8
+```
+
+
